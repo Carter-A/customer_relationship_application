@@ -109,11 +109,9 @@ class Rolodex
 
   def delete_contact
     puts "Enter ID of contact to delete"
-    delete_contact_id = gets.to_id
-    @contacts.each do |contact|
-      if contact.id == delete_contact_id
-        @contacts.delete(contact)
-      end
+    delete_contact_id = gets.to_i
+    @contacts.delete_if do |contact|
+      contact.id == delete_contact_id
     end
   end
 
