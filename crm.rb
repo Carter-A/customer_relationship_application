@@ -1,15 +1,14 @@
 require_relative "contact"
-require_relative "rolodex"
 
 class CRM
   def self.run(name)
     crm = CRM.new(name)
+    puts "\e[H\e[2J"
     crm.main_menu
   end
 
   def initialize(name)
     @name = name
-    @rolodex = Rolodex.new
   end
 
   def main_menu
@@ -38,6 +37,7 @@ class CRM
     display_attribute if user_selected == 6
     return if user_selected == 7
 
+    puts "\e[H\e[2J"
     main_menu
   end
 
@@ -50,30 +50,27 @@ class CRM
     email = gets.chomp
     print "Enter a Note: "
     note = gets.chomp
-    contact = Contact.new(first_name, last_name, email, note)
-
-    #need to add contact to rolodex as well
-    @rolodex.add_contact(contact)
+    Contact.create(first_name, last_name, email: email, note: note)
   end
 
   def modify_existing_contact
-    @rolodex.modify_existing_contact
+    Contact.modify_existing_contact
   end
 
   def delete_contact
-    @rolodex.delete_contact
+    Contact.delete_contact
   end
 
   def display_a_contact
-    @rolodex.display_a_contact
+    Contact.display_a_contact
   end
 
   def display_all_contacts
-    @rolodex.display_all
+    Contact.display_all
   end
 
   def display_attribute
-    @rolodex.display_attribute
+    Contact.display_attribute
   end
 
 end
