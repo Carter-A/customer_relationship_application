@@ -38,76 +38,52 @@ class Contact
     continue = gets.chomp
   end
 
-  def self.modify_contact
-    modify_menu
-    modify_user_selected = gets.to_i
-    Contact.modify_call_option(modify_user_selected)
-  end
-
-  def self.modify_existing_contact
-    puts "Enter user ID"
-    @contact_modify_id = gets.to_i
-    puts "Are you sure? y/n"
-    confirmation = gets.chomp
-    if confirmation == "y"
-      Contact.modify_contact
-    else
-      return
-    end
-  end
-
-  def self.modify_menu
-    puts "[1] Change first name"
-    puts "[2] Change last name"
-    puts "[3] Change email address"
-    puts "[4] Change note"
-    puts "[5] Cancel"
-    puts "Enter a number: "
-  end
-
-  def self.modify_call_option(modify_user_selected)
-    change_first_name if modify_user_selected == 1
-    change_last_name if modify_user_selected == 2
-    change_email if modify_user_selected == 3
-    change_note if modify_user_selected == 4
+  def self.modify_call_option(modify_user_selected, contact_modify_id)
+    change_first_name(contact_modify_id) if modify_user_selected == 1
+    change_last_name(contact_modify_id) if modify_user_selected == 2
+    change_email(contact_modify_id) if modify_user_selected == 3
+    change_note(contact_modify_id) if modify_user_selected == 4
     return if modify_user_selected == 5
   end
 
-  def self.change_first_name
+  def self.change_first_name(contact_modify_id)
     puts "Enter the new first name"
     new_first_name = gets.chomp
     @@contacts.each do |contact|
-      if contact.id == @contact_modify_id
+      if contact.id == contact_modify_id
         contact.first_name = new_first_name
+      else
+        puts "User ID error"
+        x = gets.chomp
       end
     end
   end
 
-  def self.change_last_name
+  def self.change_last_name(contact_modify_id)
     puts "Enter the new last name"
     new_last_name = gets.chomp
     @@contacts.each do |contact|
-      if contact.id == @contact_modify_id
+      if contact.id == contact_modify_id
         contact.last_name = new_last_name
       end
     end
   end
 
-  def self.change_email
+  def self.change_email(contact_modify_id)
     puts "Enter the new email"
     new_email = gets.chomp
     @@contacts.each do |contact|
-      if contact.id == @contact_modify_id
+      if contact.id == contact_modify_id
         contact.email = new_email
       end
     end
   end
 
-  def self.change_note
+  def self.change_note(contact_modify_id)
     puts "Enter new note"
     new_note = gets.chomp
     @@contacts.each do |contact|
-      if contact.id == @contact_modify_id
+      if contact.id == contact_modify_id
         contact.note = new_note
       end
     end

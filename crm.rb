@@ -31,10 +31,10 @@ class CRM
   def call_option(user_selected)
     add_new_contact if user_selected == 1
     modify_existing_contact if user_selected == 2
-    delete_contact if user_selected == 3
-    display_a_contact if user_selected == 4
-    display_all_contacts if user_selected == 5
-    display_attribute if user_selected == 6
+    Contact.delete_contact if user_selected == 3
+    Contact.display_a_contact if user_selected == 4
+    Contact.display_all if user_selected == 5
+    Contact.display_attribute if user_selected == 6
     return if user_selected == 7
 
     puts "\e[H\e[2J"
@@ -54,23 +54,31 @@ class CRM
   end
 
   def modify_existing_contact
-    Contact.modify_existing_contact
+    puts "Enter user ID"
+    @contact_modify_id = gets.chomp.to_i
+    puts "Are you sure? y/n"
+    confirmation = gets.chomp
+    if confirmation == "y"
+      modify_contact
+    else
+      return
+    end
   end
 
-  def delete_contact
-    Contact.delete_contact
+  def modify_contact
+    modify_menu
+    modify_user_selected = gets.to_i
+    puts modify_user_selected
+    Contact.modify_call_option(modify_user_selected, @contact_modify_id)
   end
 
-  def display_a_contact
-    Contact.display_a_contact
-  end
-
-  def display_all_contacts
-    Contact.display_all
-  end
-
-  def display_attribute
-    Contact.display_attribute
+  def modify_menu
+    puts "[1] Change first name"
+    puts "[2] Change last name"
+    puts "[3] Change email address"
+    puts "[4] Change note"
+    puts "[5] Cancel"
+    puts "Enter a number: "
   end
 
 end
